@@ -1,0 +1,21 @@
+<div>
+    <fieldset>
+        <form name="login-form" method="post" action="/usuarios/login">
+            <label for="login">Login</label>
+            <input type="text" id="loginUsuario" name="login" required />
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required />
+            <label for="lembrar">Lembrar</label>
+            <input type="checkbox" id="lembrar" name="lembrar" />
+            <div class="form-submit">
+                <input type="submit" value="Log In" />
+                {{#if error}}
+                <div style="color:red;">{{error}}</div>
+                {{/if}}
+                <div class="margin-top-30">
+                    ou <a href="/usuarios/create">Criar conta</a>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
