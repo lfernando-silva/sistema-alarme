@@ -3,11 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    if (req.usuario) {
-        return res.redirect('/veiculos');
+    if (req.user) {
+        return res.redirect('/orders');
     }
     var vm = {
-        title: 'Sistema de Alarme - Login',
+        title: 'Login',
         error: req.flash('error')
     }
     res.render('index', vm);

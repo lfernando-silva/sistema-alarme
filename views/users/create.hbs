@@ -1,0 +1,32 @@
+﻿<fieldset>
+    <div class="widget">
+        <form name="create-user-form" id="create-user-form" method="post" novalidate>
+            <table>
+                <tr>
+                    <td><label for="nome">Nome</label></td>
+                    <td><input type="text" id="nome" name="nome" required value="{{input.nome}}" /></td>
+                </tr>
+                <tr>
+                    <td><label for="cpf">CPF</label></td>
+                    <td><input type="text" id="cpf" name="cpf" required value="{{input.cpf}}" /></td>
+                </tr>
+                <tr>
+                    <td><label for="privilegios">Privilégios</label></td>
+                    <td><input type="text" id="privilegios" name="privilegios" required value="{{input.privilegios}}" /></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Email</label></td>
+                    <td><input type="email" id="email" name="email" required value="{{input.email}}" /></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td><input type="password" id="password" name="password" autocomplete="off" required /></td>
+                </tr>
+            </table>
+            <div class="form-submit">
+                <input type="submit" value="Criar Conta" />
+            </div>
+            <span style="color:red;">{{error}}</span>
+        </form>
+    </div>
+</fieldset>

@@ -1,10 +1,23 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-  <head>
-    <title>{{#if title}} {{title}}{{/if}}</title>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{{#if title}} {{title}}{{/if}} | Sistema Alarme</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+    <link rel='stylesheet' href='/stylesheets/site.css' />
+</head>
+<body class="custom-font-enabled">
+        {{#if nome}}
+        <div id="greeting" style="float:right">
+            <strong>Olá, {{nome}}!</strong>
+            <a href="/users/logout">Log out</a>
+        </div>
+        {{/if}}
+    <div id="page" class="hfeed site">
+        <!-- BEGIN page-specific content -->
+        {{{body}}}
+        <!-- END page-specific content -->
+    </div>
+</body>
 </html>

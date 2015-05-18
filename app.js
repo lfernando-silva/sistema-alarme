@@ -1,6 +1,6 @@
 ﻿var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -11,7 +11,7 @@ var flash = require('connect-flash');
 
 var config = require('./config');
 var routes = require('./routes/index');
-var usuarios = require('./routes/usuarios');
+var users = require('./routes/users');
 var veiculos = require('./routes/veiculos');
 
 var passportConfig = require('./auth/passport-config');
@@ -43,13 +43,14 @@ app.use(expressSession(
     }
 ))
 
-//autenticação e criação de sessão que ocorre antes das rotas
+//autenticação ocorre antes das rotas
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
-app.use('/usuarios', usuarios);
+app.use('/users', users);
+//app.use(restrict);
 app.use('/veiculos', veiculos);
 
 // catch 404 and forward to error handler

@@ -1,19 +1,29 @@
-<div>
+<div class="widget">
     <fieldset>
-        <form name="login-form" method="post" action="/usuarios/login">
-            <label for="login">Login</label>
-            <input type="text" id="loginUsuario" name="login" required />
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" required />
-            <label for="lembrar">Lembrar</label>
-            <input type="checkbox" id="lembrar" name="lembrar" />
+        <form name="login-form" id="login-form" method="post" action="/users/login">
+            <br />
+            <table>
+                <tr>
+                    <td><label for="email">Email</label></td>
+                        <td><input type="email" id="email" name="email" required /></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td><input type="password" id="password" name="password" required /></td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <label for="lembrar">Lembrar</label>
+                <input type="checkbox" id="lembrar" name="lembrar" />
+            </div>
+            <br />
             <div class="form-submit">
-                <input type="submit" value="Log In" />
+                <input type="submit" value="Entrar" />
                 {{#if error}}
                 <div style="color:red;">{{error}}</div>
                 {{/if}}
                 <div class="margin-top-30">
-                    ou <a href="/usuarios/create">Criar conta</a>
+                    ou <a href="/users/create">Crie uma conta</a>
                 </div>
             </div>
         </form>
