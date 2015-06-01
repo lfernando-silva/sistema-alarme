@@ -1,20 +1,27 @@
-﻿var User = require('../models/user').User;
+﻿var bcrypt = require('bcryptjs');
+var User = require('../models/user').User;
 
 exports.addUser = function (user, next) {
-    var newUser = new User({
-        nome: user.nome,
-        cpf: user.cpf,
-        privilegios: user.privilegios,
-        email: user.email.toLowerCase(),//para garantir que todo email sempre estará minúsculo ao salvar
-        password: user.password
-    });
-
-    newUser.save(function (err){
+    bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) {
             return next(err);
         }
-        next(null);
-    })
+        var newUser = new User({
+            nome: user.nome,
+            cpf: user.cpf,
+            privilegios: user.privilegios,
+            email: user.email.toLowerCase(),//para garantir que todo email sempre estará minúsculo ao salvar
+            password: hash, //senha criptografada
+            veiculos: []
+        });
+        
+        newUser.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            next(null);
+        });
+    });
 };
 
 exports.findUser = function (email, next) {
@@ -23,3 +30,24 @@ exports.findUser = function (email, next) {
         next(err, user);
     });
 };
+
+exports.updateUser = function (email, veiculo, next) {
+    
+    User.update({ email: email }, {
+        $addToSet: {
+            veiculos: 
+            {
+                placa: veiculo.placa,
+                marca: veiculo.marca,
+                cor: veiculo.cor,
+                numeroSerie: veiculo.numeroSerie,
+                status: veiculo.status
+            }
+        }
+    }, function (err, user) {
+        if (err) {
+            console.log(err);
+        }
+        next(err, user);
+    });
+}

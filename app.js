@@ -1,18 +1,21 @@
 ﻿var express = require('express');
 var path = require('path');
-//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var expressSession = require('express-session');
-var flash = require('connect-flash');   
+var flash = require('connect-flash');
+var connectMongo = require('connect-mongo');
 
 var config = require('./config');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var veiculos = require('./routes/veiculos');
+
+//Guardar dados da sessão, "lembrar"
+var MongoStore = connectMongo(expressSession);
 
 var passportConfig = require('./auth/passport-config');
 var restrict = require('./auth/restrict');
@@ -38,10 +41,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession(
     {
         secret: 'getting hungry',
-        saveUnintialized: true,
-        resave: true
+        saveUninitialized: false,
+        resave: false,
+        store: new MongoStore({
+            mongooseConnection: mongoose.connection
+        })
     }
-))
+));
 
 //autenticação ocorre antes das rotas
 app.use(flash());
@@ -50,7 +56,6 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
-//app.use(restrict);
 app.use('/veiculos', veiculos);
 
 // catch 404 and forward to error handler

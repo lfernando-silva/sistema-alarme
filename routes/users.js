@@ -2,6 +2,8 @@
 var router = express.Router();
 var userService = require('../services/user-service');
 var passport = require('passport');
+var config = require('../config');
+
 
 /* GET users listing. */
 router.get('/', function (req, res) {
@@ -33,13 +35,19 @@ router.post('/create', function (req, res) {
             return res.render('users/create', vm);
         }
         req.login(req.body, function (err) {
-            //habilite os pedidos
+            //habilite os veiculos
             res.redirect('/veiculos');
         });
     });
 });
 
 router.post('/login', 
+    function (req, res, next) {
+    if (req.body.rememberMe) {
+        req.session.cookie.maxAge = config.cookieMaxAge;
+    }
+    next();
+},
     passport.authenticate('local', 
         {
     failureRedirect: '/', 
@@ -49,6 +57,7 @@ router.post('/login',
 
 router.get('/logout', function (req, res, next) {
     req.logout();
+    req.session.destroy();
     res.redirect('/');
 });
 
