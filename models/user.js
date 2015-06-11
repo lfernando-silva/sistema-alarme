@@ -20,7 +20,7 @@ userSchema.path('email').validate(function (value, next) {
         }
         next(!user);
     });
-}, "Email já existente");
+}, "Email já existente!");
 
 
 var User = mongoose.model("User", userSchema);
