@@ -1,7 +1,6 @@
 ﻿var express = require('express');
 var router = express.Router();
 var restrict = require('../auth/restrict');
-var veiculoService = require('../services/veiculo-service');
 var userService = require('../services/user-service');
 
 /* GET veiculos/ */
@@ -27,7 +26,7 @@ router.post('/create', function (req, res) {
     //se algo estiver errado, então crie um usuário
     //var algoErrado = false;
     //if (algoErrado) {
-    userService.updateUser(req.user.email, req.body, function (err) {
+    userService.updateUserAddVeiculo(req.user.email, req.body, function (err) {
         if (err) {
             var vm = {
                 title: 'Novo Veículo',

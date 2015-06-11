@@ -31,7 +31,7 @@ exports.findUser = function (email, next) {
     });
 };
 
-exports.updateUser = function (email, veiculo, next) {
+exports.updateUserAddVeiculo = function (email, veiculo, next) {
     
     User.update({ email: email }, {
         $addToSet: {
@@ -41,7 +41,7 @@ exports.updateUser = function (email, veiculo, next) {
                 marca: veiculo.marca,
                 cor: veiculo.cor,
                 numeroSerie: veiculo.numeroSerie,
-                status: veiculo.status
+                status: 'DESATIVADO'
             }
         }
     }, function (err, user) {

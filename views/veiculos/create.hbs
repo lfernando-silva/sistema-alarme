@@ -1,24 +1,10 @@
 ﻿<fieldset>
     <div class="widget">
         <form name="create-veiculo-form" id="create-veiculo-form" method="post" novalidate>
-            <table>
-                <tr>
-                    <td><label for="placa">Placa</label></td>
-                    <td><input type="text" id="placa" name="placa" required value="{{input.placa}}" /></td>
-                </tr>
-                <tr>
-                    <td><label for="marca">Marca</label></td>
-                    <td><input type="text" id="marca" name="marca" required value="{{input.marca}}" /></td>
-                </tr>
-                <tr>
-                    <td><label for="cor">Cor</label></td>
-                    <td><input type="text" id="cor" name="cor" required value="{{input.cor}}" /></td>
-                </tr>
-                <tr>
-                    <td><label for="numeroSerie">Número de Série do Dispositivo de Controle</label></td>
-                    <td><input type="text" id="numeroSerie" name="numeroSerie" required value="{{input.numeroSerie}}" /></td>
-                </tr>
-            </table>
+            <div><input type="text" id="placa" name="placa" placeholder="Placa do Veículo" required value="{{input.placa}}" /></div>
+            <div><input type="text" id="marca" name="marca" placeholder="Marca do Veículo" required value="{{input.marca}}" /></div>
+            <div><input type="text" id="cor" name="cor" placeholder="Cor" required value="{{input.cor}}" /></div>
+            <div><input type="text" id="numeroSerie" name="numeroSerie" placeholder="Número de Série do Dispositivo" required value="{{input.numeroSerie}}" /></div>
             <div class="form-submit">
                 <input type="submit" value="Criar Veiculo" />
             </div>
@@ -26,6 +12,4 @@
         </form>
     </div>
 </fieldset>
-
-
 
