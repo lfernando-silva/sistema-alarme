@@ -39,5 +39,14 @@ router.post('/create', function (req, res) {
     });
 });
 
+router.get('/excluir/:id', function (req, res) {
+    
+    var i = req.params.id;
+
+    userService.updateUserRemoveVeiculo(req.user.email, i, function (err) {
+        res.redirect('/veiculos');
+    });
+});
+
 
 module.exports = router;

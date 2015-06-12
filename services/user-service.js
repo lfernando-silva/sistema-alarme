@@ -35,14 +35,29 @@ exports.updateUserAddVeiculo = function (email, veiculo, next) {
     
     User.update({ email: email }, {
         $addToSet: {
-            veiculos: 
-            {
+            veiculos: {
                 placa: veiculo.placa,
                 marca: veiculo.marca,
                 cor: veiculo.cor,
                 numeroSerie: veiculo.numeroSerie,
                 status: 'DESATIVADO'
             }
+        }
+    }, function (err, user) {
+        if (err) {
+            console.log(err);
+        }
+        next(err, user);
+    });
+}
+
+exports.updateUserRemoveVeiculo = function (email, placa, next) {
+    
+    var p = placa;
+    
+    User.update({ email: email }, {
+        $pull: {
+            veiculos: { placa: p }
         }
     }, function (err, user) {
         if (err) {

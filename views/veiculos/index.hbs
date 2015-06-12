@@ -1,13 +1,17 @@
 <div id="divVeiculos">
-    <form name="listaVeiculos" id="listaVeiculos" method="get" action="/veiculos/create">
         {{#each veiculos}}
         <fieldset>
             <p>{{marca}} - {{placa}} - {{cor}}</p>
             <p>{{status}}</p>
-            <p><a href="/acionamento">Acionar</a></p>
-            <p><a href="/excluir">Excluir</a></p>
+            <form name="aciona" id="aciona" method="get" action="/veiculos/aciona">
+                <input type="submit" value="ACIONA" />
+            </form>
+            <form name="excluirVeiculo" id="excluirVeiculo" method="get" action="/veiculos/excluir/{{placa}}">
+                <input type="submit" value="Excluir" />
+            </form>
         </fieldset>
         {{/each}}
+    <form name="novoVeiculo" id="novoVeiculo" method="get" action="/veiculos/create">
         <input type="submit" value="Novo veículo" />
     </form>
 </div>
