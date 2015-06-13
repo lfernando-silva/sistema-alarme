@@ -1,17 +1,13 @@
 ﻿fieldset {
-    background-color: #f88837;
+    background-color: #0094ff;
     color: #ffffff;
     font-weight: bold;
     margin: 0.5% 0 0.5% 0;
 }
 
 #listaVeiculos {
-    color: #ffffff;
+    color: #0094ff;
     font-weight: bold;
-}
-
-a{
-    font-weight:normal;
 }
 
 div{

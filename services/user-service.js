@@ -9,7 +9,6 @@ exports.addUser = function (user, next) {
         var newUser = new User({
             nome: user.nome,
             cpf: user.cpf,
-            privilegios: user.privilegios,
             email: user.email.toLowerCase(),//para garantir que todo email sempre estará minúsculo ao salvar
             password: hash, //senha criptografada
             veiculos: []
@@ -31,25 +30,51 @@ exports.findUser = function (email, next) {
     });
 };
 
+exports.validaVeiculo = function (email, veiculo, next) {
+    //procurar por um usuario que tenha
+    //'veiculos.dispositivo.numeroSerie '= veiculo.numeroSerie
+    //ou
+    //veiculos.placa = veiculo.placa E  email: email
+    User.findOne(
+        {
+            $or: [
+                { 'veiculos.dispositivo.numeroSerie': veiculo.numeroSerie },
+                { $and: [{ email: email }, { 'veiculos.placa': veiculo.placa }] }
+            ]
+        }, 
+        function (err, user) {
+        next(err, user);
+    });
+}
+
 exports.updateUserAddVeiculo = function (email, veiculo, next) {
     
-    User.update({ email: email }, {
-        $addToSet: {
-            veiculos: {
-                placa: veiculo.placa,
-                marca: veiculo.marca,
-                cor: veiculo.cor,
-                dispositivo: {
-                    numeroSerie: veiculo.numeroSerie,
-                    status: veiculo.status
-                }
-            }
-        }
-    }, function (err, user) {
+    this.validaVeiculo(email,veiculo, function (err, user) {
         if (err) {
-            console.log(err);
+            next(err, user);
         }
-        next(err, user);
+        if (user) {
+            next(null);
+        } else {
+            User.update({ email: email }, {
+                $addToSet: {
+                    veiculos: {
+                        placa: veiculo.placa,
+                        marca: veiculo.marca,
+                        cor: veiculo.cor,
+                        dispositivo: {
+                            numeroSerie: veiculo.numeroSerie,
+                            status: veiculo.status
+                        }
+                    }
+                }
+            }, function (err, user) {
+                if (err) {
+                    console.log(err);
+                }
+                next(err, user);
+            });
+        }
     });
 }
 
@@ -79,10 +104,10 @@ exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
     
     //ESSE TRECHO SERÁ ONDE OCORRE A COMUNICAÇÃO COM O ARDUINO PARA O ACIONAMENTO
     //{
-
+    
     //}
-
-    User.update({'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
+    
+    User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
         $set: {
             'veiculos.$.dispositivo.status': dispositivo.status
         }
