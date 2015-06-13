@@ -39,8 +39,10 @@ exports.updateUserAddVeiculo = function (email, veiculo, next) {
                 placa: veiculo.placa,
                 marca: veiculo.marca,
                 cor: veiculo.cor,
-                numeroSerie: veiculo.numeroSerie,
-                status: 'DESATIVADO'
+                dispositivo: {
+                    numeroSerie: veiculo.numeroSerie,
+                    status: veiculo.status
+                }
             }
         }
     }, function (err, user) {
@@ -58,6 +60,31 @@ exports.updateUserRemoveVeiculo = function (email, placa, next) {
     User.update({ email: email }, {
         $pull: {
             veiculos: { placa: p }
+        }
+    }, function (err, user) {
+        if (err) {
+            console.log(err);
+        }
+        next(err, user);
+    });
+}
+
+exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
+    
+    if (dispositivo.status == 'DESATIVADO') {
+        dispositivo.status = 'ATIVADO';
+    } else {
+        dispositivo.status = 'DESATIVADO';
+    }
+    
+    //ESSE TRECHO SERÁ ONDE OCORRE A COMUNICAÇÃO COM O ARDUINO PARA O ACIONAMENTO
+    //{
+
+    //}
+
+    User.update({'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
+        $set: {
+            'veiculos.$.dispositivo.status': dispositivo.status
         }
     }, function (err, user) {
         if (err) {

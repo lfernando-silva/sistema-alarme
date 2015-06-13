@@ -2,8 +2,9 @@
         {{#each veiculos}}
         <fieldset>
             <p>{{marca}} - {{placa}} - {{cor}}</p>
-            <p>{{status}}</p>
-            <form name="aciona" id="aciona" method="get" action="/veiculos/aciona">
+            <p>{{dispositivo.status}}</p>
+            <p>Dispositivo {{dispositivo.numeroSerie}}</p>
+            <form name="aciona" id="aciona" method="get" action="/veiculos/aciona/d-{{dispositivo.numeroSerie}}_{{dispositivo.status}}">
                 <input type="submit" value="ACIONA" />
             </form>
             <form name="excluirVeiculo" id="excluirVeiculo" method="get" action="/veiculos/excluir/{{placa}}">

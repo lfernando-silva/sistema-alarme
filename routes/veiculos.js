@@ -26,7 +26,9 @@ router.post('/create', function (req, res) {
     //se algo estiver errado, então crie um usuário
     //var algoErrado = false;
     //if (algoErrado) {
-    userService.updateUserAddVeiculo(req.user.email, req.body, function (err) {
+    var veiculo = req.body;
+    veiculo.status = 'DESATIVADO';
+    userService.updateUserAddVeiculo(req.user.email, veiculo, function (err) {
         if (err) {
             var vm = {
                 title: 'Novo Veículo',
@@ -48,5 +50,21 @@ router.get('/excluir/:id', function (req, res) {
     });
 });
 
+router.get('/aciona/:id', function (req, res) {
+    
+    var id = req.params.id;
+    
+    var numeroSerie = id.substring(id.indexOf("-")+1, id.indexOf("_"));
+    var status = id.substring(id.indexOf("_")+1);
+    
+    var dispositivo = {
+        numeroSerie: numeroSerie,
+        status: status
+    }
+
+    userService.uptadeUserAcionaDispositivo(req.user.email, dispositivo, function (err) {
+        res.redirect('/veiculos');
+    });
+});
 
 module.exports = router;
