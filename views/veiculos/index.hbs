@@ -2,7 +2,9 @@
         {{#each veiculos}}
         <fieldset>
             <p>{{marca}} - {{placa}} - {{cor}}</p>
-            <p>{{dispositivo.status}}</p>
+            
+            <p>{{dispositivo.ativacoes.[0].status}}</p>
+            <p>Última alteração: {{dispositivo.ativacoes.[0].data}} às {{dispositivo.ativacoes.[0].horario}}</p>
             <p>Dispositivo {{dispositivo.numeroSerie}}</p>
             <form name="aciona" id="aciona" method="get" action="/veiculos/aciona/d-{{dispositivo.numeroSerie}}_{{dispositivo.status}}">
                 <input type="submit" value="ACIONA" />

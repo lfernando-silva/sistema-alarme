@@ -49,6 +49,23 @@ exports.validaVeiculo = function (email, veiculo, next) {
 
 exports.updateUserAddVeiculo = function (email, veiculo, next) {
     
+    var now = new Date();
+    var hora = now.getHours();
+    var minutos = now.getMinutes();
+    var dia = now.getDate();
+    var mes = now.getUTCMonth()+1;
+    var ano = now.getFullYear();
+    
+
+    var ativacoes = [];
+    var ativacao = {
+        status: veiculo.status,
+        horario: hora + ":" + minutos,
+        data: dia+"/"+mes+"/"+ano
+    }
+    
+    ativacoes.push(ativacao);
+  
     this.validaVeiculo(email,veiculo, function (err, user) {
         if (err) {
             next(err, user);
@@ -64,7 +81,7 @@ exports.updateUserAddVeiculo = function (email, veiculo, next) {
                         cor: veiculo.cor,
                         dispositivo: {
                             numeroSerie: veiculo.numeroSerie,
-                            status: veiculo.status
+                            ativacoes: ativacoes
                         }
                     }
                 }
