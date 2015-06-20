@@ -6,7 +6,7 @@
             <p>{{dispositivo.ativacoes.[0].status}}</p>
             <p>Última alteração: {{dispositivo.ativacoes.[0].data}} às {{dispositivo.ativacoes.[0].horario}}</p>
             <p>Dispositivo {{dispositivo.numeroSerie}}</p>
-            <form name="aciona" id="aciona" method="get" action="/veiculos/aciona/d-{{dispositivo.numeroSerie}}_{{dispositivo.status}}">
+            <form name="aciona" id="aciona" method="get" action="/veiculos/aciona/d-{{dispositivo.numeroSerie}}_{{dispositivo.ativacoes.[0].status}}">
                 <input type="submit" value="ACIONA" />
             </form>
             <form name="excluirVeiculo" id="excluirVeiculo" method="get" action="/veiculos/excluir/{{placa}}">

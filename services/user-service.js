@@ -113,10 +113,19 @@ exports.updateUserRemoveVeiculo = function (email, placa, next) {
 
 exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
     
-    if (dispositivo.status == 'DESATIVADO') {
-        dispositivo.status = 'ATIVADO';
+    var now = new Date();
+    var hora = now.getHours();
+    var minutos = now.getMinutes();
+    var dia = now.getDate();
+    var mes = now.getUTCMonth() + 1;
+    var ano = now.getFullYear();
+    
+    var status = dispositivo.status;
+
+    if (status == 'DESATIVADO') {
+        status = 'ATIVADO';
     } else {
-        dispositivo.status = 'DESATIVADO';
+        status = 'DESATIVADO';
     }
     
     //ESSE TRECHO SERÁ ONDE OCORRE A COMUNICAÇÃO COM O ARDUINO PARA O ACIONAMENTO
@@ -124,9 +133,15 @@ exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
     
     //}
     
+    var ativacao = {
+        status: status,
+        horario: hora + ":" + minutos,
+        data: dia + "/" + mes + "/" + ano
+    }
+
     User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
-        $set: {
-            'veiculos.$.dispositivo.status': dispositivo.status
+        $push: {
+            'veiculos.$.dispositivo.ativacoes': { $each: [ativacao], $position: 0 }
         }
     }, function (err, user) {
         if (err) {
