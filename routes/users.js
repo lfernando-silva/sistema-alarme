@@ -2,7 +2,7 @@
 var router = express.Router();
 var userService = require('../services/user-service');
 var passport = require('passport');
-var config = require('../config');
+var config = require('../config/config.js');
 
 
 /* GET users listing. */

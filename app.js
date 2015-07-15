@@ -9,7 +9,7 @@ var expressSession = require('express-session');
 var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
 
-var config = require('./config');
+var config = require('./config/config.js');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var veiculos = require('./routes/veiculos');
@@ -17,8 +17,8 @@ var veiculos = require('./routes/veiculos');
 //Guardar dados da sessão, "lembrar"
 var MongoStore = connectMongo(expressSession);
 
-var passportConfig = require('./auth/passport-config');
-var restrict = require('./auth/restrict');
+var passportConfig = require('./config/passport-config');
+var restrict = require('./config/restrict');
 passportConfig();
 
 mongoose.connect(config.mongoUri);

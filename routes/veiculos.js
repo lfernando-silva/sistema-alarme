@@ -1,6 +1,6 @@
 ﻿var express = require('express');
 var router = express.Router();
-var restrict = require('../auth/restrict');
+var restrict = require('../config/restrict');
 var userService = require('../services/user-service');
 
 /* GET veiculos/ */
