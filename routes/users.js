@@ -19,7 +19,6 @@ router.get('/create', function (req, res) {
     res.render('users/create', vm);
 });
 
-/* GET users/view listing. */
 router.post('/create', function (req, res) {
     //se algo estiver errado, então crie um usuário
     //var algoErrado = false;
