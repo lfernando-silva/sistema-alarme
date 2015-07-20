@@ -49,21 +49,15 @@ exports.validaVeiculo = function (email, veiculo, next) {
 
 exports.updateUserAddVeiculo = function (email, veiculo, next) {
     
-    var now = new Date();
-    var hora = now.getHours();
-    var minutos = now.getMinutes();
-    var dia = now.getDate();
-    var mes = now.getUTCMonth()+1;
-    var ano = now.getFullYear();
-    
+    var dateTime = getDateTime();
 
     var ativacoes = [];
     var ativacao = {
         status: veiculo.status,
-        horario: hora + ":" + minutos,
-        data: dia+"/"+mes+"/"+ano
+        horario: dateTime.horario,
+        data: dateTime.data
     }
-    
+
     ativacoes.push(ativacao);
   
     this.validaVeiculo(email,veiculo, function (err, user) {
@@ -112,14 +106,7 @@ exports.updateUserRemoveVeiculo = function (email, placa, next) {
 }
 
 exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
-    
-    var now = new Date();
-    var hora = now.getHours();
-    var minutos = now.getMinutes();
-    var dia = now.getDate();
-    var mes = now.getUTCMonth() + 1;
-    var ano = now.getFullYear();
-    
+      
     var status = dispositivo.status;
 
     if (status == 'DESATIVADO') {
@@ -135,8 +122,8 @@ exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
     
     var ativacao = {
         status: status,
-        horario: hora + ":" + minutos,
-        data: dia + "/" + mes + "/" + ano
+        horario: dateTime.horario,
+        data: dateTime.data
     }
 
     User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
@@ -149,4 +136,20 @@ exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
         }
         next(err, user);
     });
+}
+
+function getDateTime(){
+    var now = new Date();
+    var hora = now.getHours();
+    var minutos = now.getMinutes();
+    var dia = now.getDate();
+    var mes = now.getUTCMonth() + 1;
+    var ano = now.getFullYear();
+    
+    var stringDateTime = {
+        horario: hora + ":" + minutos,
+        data: dia + "/" + mes + "/" + ano
+    }
+    
+    return stringDateTime;
 }
