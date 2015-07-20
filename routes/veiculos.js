@@ -63,6 +63,7 @@ router.get('/aciona/:id', function (req, res) {
     }
 
     userService.uptadeUserAcionaDispositivo(req.user.email, dispositivo, function (err) {
+        if (err) throw err;
         res.redirect('/veiculos');
     });
 });

@@ -106,7 +106,8 @@ exports.updateUserRemoveVeiculo = function (email, placa, next) {
 }
 
 exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
-      
+    
+    var dateTime = getDateTime();  
     var status = dispositivo.status;
 
     if (status == 'DESATIVADO') {
