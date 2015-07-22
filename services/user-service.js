@@ -30,6 +30,13 @@ exports.findUser = function (email, next) {
     });
 };
 
+exports.findUserDispositivo = function (email, dispositivo, next) {
+    User.findOne({ email: email, "veiculos.dispositivo.numeroSerie": dispositivo }, function (err, user) {
+        //    User.findOne({ email: email.toLowerCase() }, function (err, user) { não funciona
+        next(err, user);
+    });
+};
+
 exports.validaVeiculo = function (email, veiculo, next) {
     //procurar por um usuario que tenha
     //'veiculos.dispositivo.numeroSerie '= veiculo.numeroSerie
