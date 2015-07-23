@@ -1,4 +1,6 @@
-﻿fieldset {
+﻿@charset "UTF-8";
+
+fieldset {
     background-color: #0094ff;
     color: #ffffff;
     font-weight: bold;

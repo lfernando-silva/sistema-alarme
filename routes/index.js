@@ -21,9 +21,7 @@ router.get('/dispositivo/:usuario/:veiculo/:dispositivo', function (req, res) {
     var vm = {};
     
     userService.findUserDispositivo(email, dispositivo, function (err, user) {
-        if (user == null) {
-            res.render('veiculos/veiculo', vm);
-        } else {
+        if (user != null) {
             for (var i = 0; i < user.veiculos.length; i++) {
                 if ((user.veiculos[i].dispositivo.numeroSerie == dispositivo) && (veiculo == i)) {
                     vm = {

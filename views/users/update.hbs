@@ -1,0 +1,14 @@
+﻿<fieldset>
+    <div class="widget">
+        <form name="update-user-form" id="update-user-form" method="post" novalidate>
+            <div><input type="text" id="nome" name="nome" placeholder="Nome" required value="{{nome}}" /></div>
+            <div><input type="text" id="cpf" name="cpf" placeholder="CPF"  required value="{{cpf}}" /></div>
+            <div><input type="email" id="email" name="email" placeholder="E-mail" required value="{{email}}" /></div>
+            <div><input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required /></div>
+            <div class="form-submit">
+                <input type="submit" value="Atualizar Dados" />
+            </div>
+            <span style="color:red;">{{error}}</span>
+        </form>
+    </div>
+</fieldset>

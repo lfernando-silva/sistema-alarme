@@ -60,4 +60,30 @@ router.get('/logout', function (req, res, next) {
     res.redirect('/');
 });
 
+router.get('/update', function (req, res) {
+    //nessa variável, podemos setar qualquer tag na página destino
+    var email = req.user.email;
+    var nome = req.user.nome;
+    var cpf = req.user.cpf;
+    userService.findUser(email, function (err) {
+        if (!err) {
+            var vm = {
+                title: 'Atualizar Dados',
+                email: email,
+                cpf: cpf,
+                nome: nome
+            };
+            res.render('users/update', vm);
+        }
+    })   
+});
+
+router.post('/update', function (req, res) {
+    userService.updateUser(req.body, function (err){
+        if (!err) {
+            res.redirect('/veiculos');
+        }
+    })
+});
+
 module.exports = router;

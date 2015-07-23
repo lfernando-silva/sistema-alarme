@@ -19,7 +19,7 @@
                 }
                 
                 if (!same) {
-                    return (null, null);
+                    return next();
                 }
                 next(null, user);//response para tela autenticado
             })

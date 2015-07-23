@@ -8,12 +8,15 @@
     <link rel='stylesheet' href='/stylesheets/site.css' />
 </head>
 <body class="custom-font-enabled">
-        {{#if nome}}
-        <div id="greeting">
-            <strong>Olá, {{nome}}!</strong>
-            <a href="/users/logout">Log out</a>
-        </div>
-        {{/if}}
+    {{#if nome}}
+    <div id="greeting">
+        <strong>Olá, {{nome}}!</strong>
+        <a href="/users/logout">Log out</a>
+        <a href="/users/update">Alterar dados</a>
+        <a href="/users/delete">Excluir Conta</a>
+    </div>
+    {{/if}}
+
     <div id="page" class="hfeed site">
         <!-- BEGIN page-specific content -->
         {{{body}}}

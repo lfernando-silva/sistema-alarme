@@ -25,14 +25,16 @@ exports.addUser = function (user, next) {
 
 exports.findUser = function (email, next) {
     User.findOne({ email: email }, function (err, user) {
-        //    User.findOne({ email: email.toLowerCase() }, function (err, user) { não funciona
         next(err, user);
     });
 };
 
 exports.findUserDispositivo = function (email, dispositivo, next) {
     User.findOne({ email: email, "veiculos.dispositivo.numeroSerie": dispositivo }, function (err, user) {
-        //    User.findOne({ email: email.toLowerCase() }, function (err, user) { não funciona
+        if (err || !user) {
+            next(err);
+        }
+        
         next(err, user);
     });
 };
@@ -50,24 +52,40 @@ exports.validaVeiculo = function (email, veiculo, next) {
             ]
         }, 
         function (err, user) {
-        next(err, user);
-    });
+            next(err, user);
+        });
 }
+
+exports.updateUser = function (user, next) {   
+    bcrypt.hash(user.password, 10, function (err, hash) {
+        User.update({ email: user.email }, {
+            $set: {
+                nome: user.nome,
+                cpf: user.cpf,
+                email: user.email.toLowerCase(),
+                password: hash
+            }
+        }, function (err) {
+            if (err) return next(err);
+            next(err, user);
+        });
+    });
+};
 
 exports.updateUserAddVeiculo = function (email, veiculo, next) {
     
     var dateTime = getDateTime();
-
+    
     var ativacoes = [];
     var ativacao = {
         status: veiculo.status,
         horario: dateTime.horario,
         data: dateTime.data
     }
-
+    
     ativacoes.push(ativacao);
-  
-    this.validaVeiculo(email,veiculo, function (err, user) {
+    
+    this.validaVeiculo(email, veiculo, function (err, user) {
         if (err) {
             next(err, user);
         }
@@ -114,9 +132,9 @@ exports.updateUserRemoveVeiculo = function (email, placa, next) {
 
 exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
     
-    var dateTime = getDateTime();  
+    var dateTime = getDateTime();
     var status = dispositivo.status;
-
+    
     if (status == 'DESATIVADO') {
         status = 'ATIVADO';
     } else {
@@ -133,7 +151,7 @@ exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
         horario: dateTime.horario,
         data: dateTime.data
     }
-
+    
     User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
         $push: {
             'veiculos.$.dispositivo.ativacoes': { $each: [ativacao], $position: 0 }
@@ -146,7 +164,7 @@ exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
     });
 }
 
-function getDateTime(){
+function getDateTime() {
     var now = new Date();
     var hora = now.getHours();
     var minutos = now.getMinutes();
