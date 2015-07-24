@@ -1,6 +1,6 @@
 var t;
 
-this.t = setInterval("redereciona()", '10000');//60 segundos
+this.t = setInterval("redereciona()", '30000');//30 segundos
 
 function redereciona() {
     location.reload()
@@ -9,5 +9,5 @@ function redereciona() {
 function acao() {
     clearInterval(this.t);
     //inicia novamente
-    this.t = setInterval("redereciona()", '10000');//60 segundos
+    this.t = setInterval("redereciona()", '30000');//30 segundos
 }

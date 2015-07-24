@@ -80,8 +80,12 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
+    var nome = req.user.nome;
+    var vm = {
+        nome: nome
+    }
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('error', vm, {
         message: err.message,
         error: {}
     });

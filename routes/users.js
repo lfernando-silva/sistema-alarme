@@ -10,6 +10,24 @@ router.get('/', function (req, res) {
     res.send('USERS');
 });
 
+router.get('/help', function (req, res) {
+    var nome = req.user.nome;
+    var vm = {
+        title: 'Ajuda',
+        nome: nome
+    };
+    res.render('users/help', vm);
+});
+
+router.get('/about', function (req, res) {
+    var nome = req.user.nome;
+    var vm = {
+        title: 'Sobre',
+        nome: nome
+    };
+    res.render('users/about', vm);
+});
+
 /* GET users/view listing. */
 router.get('/create', function (req, res) {
     //nessa variável, podemos setar qualquer tag na página destino

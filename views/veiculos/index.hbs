@@ -1,7 +1,8 @@
+<div class="jumbotron" id="divVeiculos">
     <div class="container-fluid">
         {{#each veiculos}}
         <fieldset>
-            <div class="row jumbotron" id="divVeiculos">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
@@ -11,7 +12,7 @@
                             <picture>
                                 <img id="veiculo" alt="Carro" srcset="../images/carro.jpg 3x" class="img-thumbnail" />
                             </picture>
-                            
+
                             <form name="aciona" id="aciona" method="get" action="/veiculos/aciona/d-{{dispositivo.numeroSerie}}_{{dispositivo.ativacoes.[0].status}}">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">
                                     ACIONAR ALARME!
@@ -25,7 +26,7 @@
                         </div>
 
                     </div>
-                    <dl class="dl-horizontal">
+                    <dl class="dl-vertical">
                         <dt>
                             Marca
                         </dt>
