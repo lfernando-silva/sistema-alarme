@@ -86,4 +86,28 @@ router.post('/update', function (req, res) {
     })
 });
 
+router.get('/delete', function (req, res) {
+    var email = req.user.email;
+    var nome = req.user.nome;
+    userService.findUser(email, function (err) {
+        if (!err) {
+            var vm = {
+                title: 'Excluir Conta',
+                nome: nome
+            };
+            res.render('users/delete', vm);
+        }
+    })
+});
+
+router.post('/delete', function (req, res) {
+    var email = req.user.email;
+    userService.deleteUser(email, function (err) {
+        if (!err) {
+            req.session.destroy();
+            res.redirect('/');
+        }
+    })
+});
+
 module.exports = router;

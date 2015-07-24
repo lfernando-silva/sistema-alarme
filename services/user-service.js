@@ -164,6 +164,16 @@ exports.uptadeUserAcionaDispositivo = function (email, dispositivo, next) {
     });
 }
 
+exports.deleteUser = function (email, next){
+    User.remove({ email: email }, function (err){
+        if (err) {
+            return next();
+        }
+        next(null);
+    })
+
+}
+
 function getDateTime() {
     var now = new Date();
     var hora = now.getHours();

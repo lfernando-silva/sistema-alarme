@@ -1,19 +1,28 @@
 ﻿.jumbotron{
     margin-top: 5%;
     text-align:center;
-}
-
-#veiculo{
-    margin-left: 45%;
-    margin-right: 50%;
-    margin-bottom: 2%;
+    font-size: 20px;
+    background-color: rgba(40, 180, 255, 0.40);
 }
 
 button{
     margin-top:1%;
+    font-weight:bold; 
+}
+
+#btnAdicionarVeiculo{
+    margin-bottom: 1%;
 }
 
 dl{
     margin-top:5%;
     background-color:ActiveBorder;
+}
+
+picture{
+    align-self:center;
+}
+
+#divVeiculos{
+    margin-top: 0;
 }
