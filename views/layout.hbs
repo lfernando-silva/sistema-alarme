@@ -1,26 +1,79 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{#if title}} {{title}}{{/if}} | Sistema Alarme</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/site.css' />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="LayoutIt!">
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/stylesheets/site.css" rel="stylesheet">
 </head>
-<body class="custom-font-enabled">
-    {{#if nome}}
-    <div id="greeting">
-        <strong>Olá, {{nome}}!</strong>
-        <a href="/users/logout">Log out</a>
-        <a href="/users/update">Alterar dados</a>
-        <a href="/users/delete">Excluir Conta</a>
-    </div>
-    {{/if}}
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                {{#if nome}}
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                    <div class="navbar-header">
 
-    <div id="page" class="hfeed site">
-        <!-- BEGIN page-specific content -->
-        {{{body}}}
-        <!-- END page-specific content -->
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button> <a class="navbar-brand" href="/">Home</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="/users/update">Alterar dados</a>
+                            </li>
+                            <li>
+                                <a href="/users/delete">Excluir Conta</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Operações<strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/users/update">Alterar Dados</a>
+                                    </li>
+                                    <li>
+                                        <a href="/users/delete">Excluir Conta</a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">Log out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="jumbotron">
+                    <h2>
+                        <strong>Olá, {{nome}}!</strong>
+                    </h2>
+                    <h3>
+                        Notificações
+                    </h3>
+                    <p>
+                       Você não tem nenhuma nova notificação.
+                    </p>
+                </div>
+                {{/if}}
+                <div id="page" class="hfeed site">
+                    <!-- BEGIN page-specific content -->
+                    {{{body}}}
+                    <!-- END page-specific content -->
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/scripts.js"></script>
 </body>
 </html>

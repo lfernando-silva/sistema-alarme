@@ -1,15 +1,43 @@
 ﻿<fieldset>
-    <div class="widget">
-        <form name="create-veiculo-form" id="create-veiculo-form" method="post">
-            <div><input type="text" id="placa" name="placa" placeholder="Placa do Veículo" required value="{{input.placa}}" /></div>
-            <div><input type="text" id="marca" name="marca" placeholder="Marca do Veículo" required value="{{input.marca}}" /></div>
-            <div><input type="text" id="cor" name="cor" placeholder="Cor" required value="{{input.cor}}" /></div>
-            <div><input type="text" id="numeroSerie" name="numeroSerie" placeholder="Número de Série do Dispositivo" required value="{{input.numeroSerie}}" /></div>
-            <div class="form-submit">
-                <input type="submit" value="Criar Veiculo" />
+    <div class="jumbotron">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" method="post">
+                        <div class="form-group">
+
+                            <label for="placa">
+                                Placa
+                            </label>
+                            <input type="text" class="form-control" id="placa" name="placa" placeholder="Placa do Veículo" required value="{{input.placa}}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="marca">
+                                Marca
+                            </label>
+                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Marca do Veículo" required value="{{input.marca}}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cor">
+                                Cor
+                            </label>
+                            <input type="text" class="form-control" id="cor" name="cor" placeholder="Cor" required value="{{input.cor}}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">
+                                Numero de Série do Dispositivo
+                            </label>
+                            <input type="password" class="form-control" id="numeroSerie" name="numeroSerie" placeholder="Número de Série do Dispositivo" required value="{{input.numeroSerie}}" />
+                        </div>
+                        <button type="submit" class="btn btn-default">
+                            Adicionar Veículo
+                        </button>
+                        <br /><a href="/">Cancelar</a>
+                        <span style="color:red;">{{error}}</span>
+                    </form>
+                </div>
             </div>
-            <span style="color:red;">{{error}}</span>
-        </form>
+        </div>
     </div>
 </fieldset>
 
