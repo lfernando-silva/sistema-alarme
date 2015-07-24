@@ -8,26 +8,26 @@
                             <label for="email">
                                 Email
                             </label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" required value="{{input.email}}" />
+                            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" maxlength="40" required value="{{input.email}}" />
                         </div>
                         <div class="form-group">
                             <label for="nome">
                                 Nome
                             </label>
-                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required value="{{input.nome}}" />
+                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" maxlength="40" required value="{{input.nome}}" />
                         </div>
                         <div class="form-group">
                             <label for="cpf">
                                 CPF
                             </label>
-                            <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" required value="{{input.cpf}}" />
+                            <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" maxlength="15" required value="{{input.cpf}}" />
                         </div>
                         <div class="form-group">
 
                             <label for="password">
                                 Password
                             </label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" required />
+                            <input type="password" class="form-control" id="password" name="password" maxlength="8" placeholder="Password" autocomplete="off" required />
                         </div>
                         <button type="submit" class="btn btn-primary">
                             Criar!

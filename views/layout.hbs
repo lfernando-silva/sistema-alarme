@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="refresh" content="30">
+    <!--<meta http-equiv="refresh" content="30">-->
     <meta name="author" content="LayoutIt!">
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/style.css" rel="stylesheet">
     <link href="/stylesheets/site.css" rel="stylesheet">
     <title>{{#if title}}{{title}}{{/if}} | Sistema Alarme</title>
 </head>
-<body>
+<body onmousemove="acao()" onkeypress="acao()" onscroll="acao()">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -61,7 +61,7 @@
                         Notificações
                     </h3>
                     <p>
-                       Você não tem nenhuma nova notificação.
+                       Você não tem nenhuma nova notificação. MUDOU
                     </p>
                 </div>
                 {{/if}}
