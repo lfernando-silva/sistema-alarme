@@ -95,11 +95,11 @@ exports.updateUserAddVeiculo = function (email, veiculo, next) {
             User.update({ email: email }, {
                 $addToSet: {
                     veiculos: {
-                        placa: veiculo.placa,
+                        placa: veiculo.placa.toUpperCase(),
                         marca: veiculo.marca,
                         cor: veiculo.cor,
                         dispositivo: {
-                            numeroSerie: veiculo.numeroSerie,
+                            numeroSerie: veiculo.numeroSerie.toUpperCase(),
                             ativacoes: ativacoes
                         }
                     }
