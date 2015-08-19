@@ -4,12 +4,6 @@ var userService = require('../services/user-service');
 var passport = require('passport');
 var config = require('../config/config.js');
 
-
-/* GET users listing. */
-router.get('/', function (req, res) {
-    res.send('USERS');
-});
-
 router.get('/help', function (req, res) {
     var nome = req.user.nome;
     var vm = {

@@ -21,7 +21,6 @@ router.get('/create', restrict, function (req, res) {
     res.render('veiculos/create', vm);
 });
 
-/* GET users/view listing. */
 router.post('/create', function (req, res) {
     //se algo estiver errado, então crie um usuário
     //var algoErrado = false;
@@ -63,8 +62,9 @@ router.get('/aciona/:id', function (req, res) {
     }
 
     userService.uptadeUserAcionaDispositivo(req.user.email, dispositivo, function (err) {
-        if (err) throw err;
-        res.redirect('/veiculos');
+        if (!err) {
+            res.redirect('/veiculos');
+        }  
     });
 });
 
