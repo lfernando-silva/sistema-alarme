@@ -1,6 +1,6 @@
 ﻿var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var userService = require('../services/user-service');
+
 
 var userSchema = new Schema({
     nome: { type: String, required: "Insira seu primeiro nome" },
@@ -13,6 +13,7 @@ var userSchema = new Schema({
 
 //validar email, chamada a função definida no user-service.js
 userSchema.path('email').validate(function (value, next) {
+    var userService = require("../services/user-service");
     userService.findUser(value, function (err, user) {
         if (err) {
             console.log(err);
