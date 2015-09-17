@@ -30,8 +30,8 @@ var userService = {
         });
     },
     
-    findUserDispositivo : function (email, dispositivo, next) {
-        User.findOne({ email: email, "veiculos.dispositivo.numeroSerie": dispositivo }, function (err, user) {
+    findUserDispositivo : function (dispositivo, next) {
+        User.findOne({"veiculos.dispositivo.numeroSerie": dispositivo }, function (err, user) {
             if (err || !user) {
                 next(err);
             }

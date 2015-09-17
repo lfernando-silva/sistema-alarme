@@ -6,7 +6,7 @@
 
 //Server Info
 #define HOST "200.131.96.47"
-#define PORT "1000"
+#define PORT "3000"
 #define CONNECTION_TYPE "TCP"
 
 // PIN Number
@@ -50,26 +50,25 @@ void setup()
 void loop()
 {
   if (started) {
-    Serial.println("Start" );
+    Serial.println("Start");
     getConnection();
     submit("01");
-    Serial.println("Finish" );
+    Serial.println("Finish");
     endConnection();
-    delay(10000);
+    delay(2000);
   }
 };
 
 void getConnection() {
-  sendATCommand("AT+CREG?", 1000);
-  showSerialData();
-  sendATCommand("AT+CGATT=1", 1000);
-  sendATCommand("AT+CIPSHUT", 1000);
-  sendATCommand("AT+CIPSTATUS", 1000);
-  sendATCommand("AT+CIPMUX=0", 1000);
-  sendATCommand(attachedAPN, 1000);
-  sendATCommand("AT+CIICR", 1000);
-  sendATCommand("AT+CIFSR", 1000);
-  sendATCommand(connection, 1000);
+  sendATCommand("AT+CREG?", 2000);
+  sendATCommand("AT+CGATT=1", 2000);
+  sendATCommand("AT+CIPSHUT", 2000);
+  sendATCommand("AT+CIPSTATUS", 2000);
+  sendATCommand("AT+CIPMUX=0", 2000);
+  sendATCommand(attachedAPN, 2000);
+  sendATCommand("AT+CIICR", 2000);
+  sendATCommand("AT+CIFSR", 2000);
+  sendATCommand(connection, 2000);
 }
 
 void endConnection() {
@@ -83,12 +82,13 @@ void submit(String message)
 }
 
 void sendATCommand(String command, int d) {
+  Serial.println("ENVIANDO COMANDO: "+command);
   client.println(command);
   delay(d);
 }
 
 void sendMessage(String command, String message, int d) {
-  Serial.println("ENVIANDO COMANDO");
+  Serial.println("ENVIANDO COMANDO: "+message);
   sendATCommand(command, d);
   client.println(message);
   client.println((char)26, 2000);
@@ -98,6 +98,7 @@ void sendMessage(String command, String message, int d) {
 String concatenate(String command, String p1, String p2, String p3) {
 
   String s = command + "\"" + p1 + "\",\"" + p2 + "\",\"" + p3 + "\""; //AT... = "p1","p2","p3"
+  Serial.println(s);
   return s;
 }
 

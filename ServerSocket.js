@@ -1,8 +1,18 @@
 ﻿var Net = require('net');
+var userService = require('./services/user-service.js');
+var config = require('./config/config.js');
+var mongoose = require('mongoose');
+
+var HOST = '0.0.0.0';
+var PORT = 3001;
 
 var Server = Net.createServer(function (socket) {
-    //Apenas informações sobre o socket
+    mongoose.connect(config.mongoUri);
     socket.setKeepAlive(true, 20);
+    
+    //Informações sobre o socket
+    
+    
     var socketAtual = {
         remoteAddress: socket.remoteAddress,
         remotePort: socket.remotePort,
@@ -11,13 +21,17 @@ var Server = Net.createServer(function (socket) {
     console.log('Connection from ' + socketAtual.remoteAddress + ":" + socketAtual.remotePort);
     
     socket.on('data', function (data) {
-        if (data == '01') {
-            console.log("Consulta no banco de dados por " + data);
-            console.log(typeof data);
-        } else {
-            console.log("Não fazer nada ->" + data)
-            console.log(typeof data);
-        }
+        var serial = data.toString();
+        userService.findUserDispositivo(serial, function (err, result) {
+            if (err || !result) {
+                console.log("Não encontrado");
+            } else {
+                console.log("Enviando status no socket");
+                var status = getStatus(result.veiculos, serial)
+                //escrever o status no socket
+                socket.write(new Buffer(getWriteMessage()));
+            }
+        })
     });
     
     socket.setTimeout(120 * 10000, function () {
@@ -37,4 +51,22 @@ var Server = Net.createServer(function (socket) {
     });
 });
 
-module.exports = Server;
+Server.listen(PORT, HOST, function () {
+    console.log("Server Listening on " + HOST + ":" + PORT);
+});
+
+function getStatus(veiculos, serial) {
+    for (var i in veiculos) {
+        if (veiculos[i].dispositivo.numeroSerie == serial) {
+            return veiculos[i].dispositivo.ativacoes[0].status;
+        }
+    }
+}
+
+function getWriteMessage(status){
+    if (status == "ATIVADO") {
+        return "1";
+    } else {
+        return "2";
+    }
+}
