@@ -6,11 +6,11 @@
 
 //Server Info
 #define HOST "200.131.96.47"
-#define PORT "3000"
+#define PORT "3001"
 #define CONNECTION_TYPE "TCP"
 
 // PIN Number
-#define PINNUMBER "8955312029926239533"
+#define PINNUMBER "8955312029926239533" //19 algarismos
 
 // APN data
 #define GPRS_APN       "zap.vivo.com.br" // replace your GPRS APN
@@ -42,6 +42,7 @@ void setup()
   if (gsm.begin(9600)) {
     Serial.println("\nstatus=READY");
     started = true;
+    getAPN();
   } else {
     Serial.println("\nstatus=IDLE");
   };
@@ -52,20 +53,23 @@ void loop()
   if (started) {
     Serial.println("Start");
     getConnection();
-    submit("01");
+    submit("123456");
     Serial.println("Finish");
     endConnection();
     delay(2000);
   }
 };
 
-void getConnection() {
+void getAPN() {
   sendATCommand("AT+CREG?", 2000);
-  sendATCommand("AT+CGATT=1", 2000);
+  sendATCommand("AT+CGATT?", 2000);
   sendATCommand("AT+CIPSHUT", 2000);
   sendATCommand("AT+CIPSTATUS", 2000);
   sendATCommand("AT+CIPMUX=0", 2000);
   sendATCommand(attachedAPN, 2000);
+}
+
+void getConnection() {
   sendATCommand("AT+CIICR", 2000);
   sendATCommand("AT+CIFSR", 2000);
   sendATCommand(connection, 2000);
@@ -77,18 +81,18 @@ void endConnection() {
 
 void submit(String message)
 {
-  sendMessage("AT+CIPSEND=2", message, 1000);
+  sendMessage("AT+CIPSEND=6", message, 1000);
   sendATCommand("AT+CIPSHUT", 1000);
 }
 
 void sendATCommand(String command, int d) {
-  Serial.println("ENVIANDO COMANDO: "+command);
+  Serial.println("ENVIANDO COMANDO: " + command);
   client.println(command);
   delay(d);
 }
 
 void sendMessage(String command, String message, int d) {
-  Serial.println("ENVIANDO COMANDO: "+message);
+  Serial.println("ENVIANDO COMANDO: " + message);
   sendATCommand(command, d);
   client.println(message);
   client.println((char)26, 2000);
