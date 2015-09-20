@@ -10,12 +10,15 @@
 #define CONNECTION_TYPE "TCP"
 
 // PIN Number
-#define PINNUMBER "8955312029926239533" //19 algarismos
+#define PINNUMBER "8955312029926239533" //19 caracteres
 
 // APN data
 #define GPRS_APN       "zap.vivo.com.br" // replace your GPRS APN
 #define GPRS_LOGIN     "vivo"    // replace with your GPRS login
 #define GPRS_PASSWORD  "vivo" // replace with your GPRS password
+
+//SERIAL KEY NUMBER
+#define SERIAL_KEY_NUMBER "123456"
 
 //RX TX
 #define rx 2
@@ -42,7 +45,12 @@ void setup()
   if (gsm.begin(9600)) {
     Serial.println("\nstatus=READY");
     started = true;
-    getAPN();
+    sendATCommand("AT+CREG?", 1000);
+    sendATCommand("AT+CGATT=1", 1000);
+    sendATCommand("AT+CIPSHUT", 1000);
+    sendATCommand("AT+CIPSTATUS", 1000);
+    sendATCommand("AT+CIPMUX=0", 1000);
+    sendATCommand(attachedAPN, 1000);
   } else {
     Serial.println("\nstatus=IDLE");
   };
@@ -53,36 +61,27 @@ void loop()
   if (started) {
     Serial.println("Start");
     getConnection();
-    submit("123456");
+    submit(SERIAL_KEY_NUMBER);
     Serial.println("Finish");
     endConnection();
-    delay(2000);
   }
 };
 
-void getAPN() {
-  sendATCommand("AT+CREG?", 2000);
-  sendATCommand("AT+CGATT?", 2000);
-  sendATCommand("AT+CIPSHUT", 2000);
-  sendATCommand("AT+CIPSTATUS", 2000);
-  sendATCommand("AT+CIPMUX=0", 2000);
-  sendATCommand(attachedAPN, 2000);
-}
-
 void getConnection() {
+
   sendATCommand("AT+CIICR", 2000);
   sendATCommand("AT+CIFSR", 2000);
   sendATCommand(connection, 2000);
 }
 
 void endConnection() {
-  sendATCommand("AT+CIPCLOSE", 1000);
+  sendATCommand("AT+CIPCLOSE", 500);
 }
 
 void submit(String message)
 {
-  sendMessage("AT+CIPSEND=6", message, 1000);
-  sendATCommand("AT+CIPSHUT", 1000);
+  sendMessage("AT+CIPSEND=6", message, 2000);
+  sendATCommand("AT+CIPSHUT", 100);
 }
 
 void sendATCommand(String command, int d) {
@@ -96,7 +95,6 @@ void sendMessage(String command, String message, int d) {
   sendATCommand(command, d);
   client.println(message);
   client.println((char)26, 2000);
-  delay(500);
 }
 
 String concatenate(String command, String p1, String p2, String p3) {
