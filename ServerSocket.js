@@ -30,10 +30,10 @@ var Server = Net.createServer(function (socket) {
                 
                 var veiculoAtual = getStatus(result.veiculos, serial)
                 
-                console.log("Atualizando status de "+veiculoAtual.placa+" : "+veiculoAtual.status);
+                console.log("Updating car status from "+veiculoAtual.placa+" : "+veiculoAtual.status+" at "+new Date());
                 
                 //escrever o status no socket
-                socket.write(new Buffer(getWriteMessage()));
+                socket.write(getWriteMessage().toString());
             }
         })
     });

@@ -6,7 +6,7 @@
 
 //Server Info
 #define HOST "200.131.96.47"
-#define PORT "3001"
+#define PORT 3001
 #define CONNECTION_TYPE "TCP"
 
 // PIN Number
@@ -17,96 +17,78 @@
 #define GPRS_LOGIN     "vivo"    // replace with your GPRS login
 #define GPRS_PASSWORD  "vivo" // replace with your GPRS password
 
-//SERIAL KEY NUMBER
-#define SERIAL_KEY_NUMBER "123456"
-
 //RX TX
 #define rx 2
 #define tx 3
 
+//LIBRARIES
 #include <SoftwareSerial.h>
 #include <SIM900.h>
+#include "inetGSM.h"
 
-SoftwareSerial client = SoftwareSerial(rx, tx); // configure software serial port
+//Global variables
+
 boolean started = false;
+InetGSM inet;
 
-String attachedAPN = concatenate("AT+CSTT=", GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD);
-String connection = concatenate("AT+CIPSTART=", CONNECTION_TYPE, HOST, PORT);
+//CLIENT CONST
+char SERIAL_KEY_NUMBER[7] = "123456";
 
 void setup()
 {
   pinMode(rx, INPUT);
   pinMode(tx, OUTPUT);
   //Serial connection.
-  client.begin(9600);
   Serial.begin(9600);
   Serial.println("GSM Shield testing.");
 
   if (gsm.begin(9600)) {
     Serial.println("\nstatus=READY");
-    started = true;
-    sendATCommand("AT+CREG?", 1000);
-    sendATCommand("AT+CGATT=1", 1000);
-    sendATCommand("AT+CIPSHUT", 1000);
-    sendATCommand("AT+CIPSTATUS", 1000);
-    sendATCommand("AT+CIPMUX=0", 1000);
-    sendATCommand(attachedAPN, 1000);
-  } else {
-    Serial.println("\nstatus=IDLE");
-  };
+    //started = true;
+    if (inet.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD)) {
+      Serial.println("status=ATTACHED");
+      if (inet.connectTCP(HOST, PORT)) {
+        started = true;
+      }
+    } else {
+      Serial.println("status=ERROR");
+    }
+  }
 }
 
 void loop()
 {
   if (started) {
     Serial.println("Start");
-    getConnection();
     submit(SERIAL_KEY_NUMBER);
     Serial.println("Finish");
     endConnection();
   }
 };
 
-void getConnection() {
-
-  sendATCommand("AT+CIICR", 2000);
-  sendATCommand("AT+CIFSR", 2000);
-  sendATCommand(connection, 2000);
-}
-
 void endConnection() {
   sendATCommand("AT+CIPCLOSE", 500);
 }
 
-void submit(String message)
+void submit(char* message)
 {
   sendMessage("AT+CIPSEND=6", message, 2000);
   sendATCommand("AT+CIPSHUT", 100);
 }
 
-void sendATCommand(String command, int d) {
-  Serial.println("ENVIANDO COMANDO: " + command);
-  client.println(command);
+void sendATCommand(char* command, int d) {
+  Serial.println("ENVIANDO COMANDO");
+  gsm.SimpleWriteln(command);
   delay(d);
 }
 
-void sendMessage(String command, String message, int d) {
-  Serial.println("ENVIANDO COMANDO: " + message);
+void sendMessage(char* command, char* message, int d) {
+  Serial.println("ENVIANDO MENSAGEM");
   sendATCommand(command, d);
-  client.println(message);
-  client.println((char)26, 2000);
+  gsm.SimpleWriteln(message);
+  gsm.SimpleWriteln((char)26);
+  char msg[1];
+  gsm.read(msg,2);
+  Serial.println(msg);
 }
 
-String concatenate(String command, String p1, String p2, String p3) {
-
-  String s = command + "\"" + p1 + "\",\"" + p2 + "\",\"" + p3 + "\""; //AT... = "p1","p2","p3"
-  Serial.println(s);
-  return s;
-}
-
-void showSerialData()
-{
-  Serial.println("SERIAL CONTÉM: ");
-  while (client.available() != 0)
-    Serial.write(char (client.read()));
-}
