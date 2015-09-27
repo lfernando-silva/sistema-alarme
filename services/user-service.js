@@ -98,7 +98,7 @@ var userService = {
                         cor: veiculo.cor,
                         dispositivo: {
                             numeroSerie: veiculo.numeroSerie.toUpperCase(),
-                            isConectado: '0',
+                            isConectado: null,
                             isAberto: null, 
                             //aberto = null significa que o carro está aberto, = 1 está fechado. 
                             // Alarme só dispara quando: isAberto = null E status = 'ATIVADO'
@@ -129,9 +129,19 @@ var userService = {
         });
     },
     
-    updateUserIsAberto: function (numeroSerie, isDisparado, next) {
+    updateUserIsAberto: function (numeroSerie, isAberto, next) {
         User.update({ "veiculos.dispositivo.numeroSerie": numeroSerie }, 
             { $set: { "veiculos.$.dispositivo.isAberto": isDisparado } }, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return next();
+        });
+    },
+    
+    updateUserIsConectado: function (numeroSerie, isConectado, next) {
+        User.update({ "veiculos.dispositivo.numeroSerie": numeroSerie }, 
+            { $set: { "veiculos.$.dispositivo.isConectado": isConectado } }, function (err) {
             if (err) {
                 return next(err);
             }
