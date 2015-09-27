@@ -31,7 +31,7 @@ var userService = {
     },
     
     findUserDispositivo : function (dispositivo, next) {
-        User.findOne({"veiculos.dispositivo.numeroSerie": dispositivo }, function (err, user) {
+        User.findOne({ "veiculos.dispositivo.numeroSerie": dispositivo }, function (err, user) {
             if (err || !user) {
                 next(err);
             }
@@ -98,6 +98,10 @@ var userService = {
                         cor: veiculo.cor,
                         dispositivo: {
                             numeroSerie: veiculo.numeroSerie.toUpperCase(),
+                            isConectado: '0',
+                            isAberto: null, 
+                            //aberto = null significa que o carro está aberto, = 1 está fechado. 
+                            // Alarme só dispara quando: isAberto = null E status = 'ATIVADO'
                             ativacoes: ativacoes
                         }
                     }
@@ -125,6 +129,16 @@ var userService = {
         });
     },
     
+    updateUserIsAberto: function (numeroSerie, isDisparado, next) {
+        User.update({ "veiculos.dispositivo.numeroSerie": numeroSerie }, 
+            { $set: { "veiculos.$.dispositivo.isAberto": isDisparado } }, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return next();
+        });
+    },
+    
     uptadeUserAcionaDispositivo : function (email, dispositivo, next) {
         
         var dateTime = userService.getDateTime();
@@ -136,16 +150,23 @@ var userService = {
             data: dateTime.data
         }
         
-        User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
-            $push: {
-                'veiculos.$.dispositivo.ativacoes': { $each: [ativacao], $position: 0 }
-            }
-        }, function (err, user) {
-            if (err) {
-                console.log(err);
-            }
-            next(err, user);
-        });
+        var isAberto;
+        if (status == "DESATIVADO") {
+            isAberto = null;
+        }
+        
+        this.updateUserIsAberto(dispositivo.numeroSerie, isAberto, function (err) {
+            User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
+                $push: {
+                    'veiculos.$.dispositivo.ativacoes': { $each: [ativacao], $position: 0 }
+                }
+            }, function (err, user) {
+                if (err) {
+                    console.log(err);
+                }
+                next(err, user);
+            });
+        })
     },
     
     deleteUser : function (email, next) {

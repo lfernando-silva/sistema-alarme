@@ -6,7 +6,7 @@ var config = require('../config/config.js');
 
 /* GET users listing. */
 router.get('/', function (req, res) {
-    -res.send('USERS');
+    res.send('USERS');
 });
 
 router.get('/help', function (req, res) {
