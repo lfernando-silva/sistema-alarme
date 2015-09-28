@@ -23,7 +23,7 @@ boolean started = false;
 InetGSM inet;
 
 //SIM900 IMEI
-char SERIAL_KEY_NUMBER[19] = "013950007601108";
+char SERIAL_KEY_NUMBER[16] = "013950007601108";
 
 void setup()
 {
@@ -48,6 +48,7 @@ void setup()
 void loop()
 {
   if (started) {
+    SERIAL_KEY_NUMBER[15] = getYellowStatus();
     submit(SERIAL_KEY_NUMBER);
     endConnection();
   }
@@ -97,14 +98,6 @@ void acendeLed(char state) {
 }
 
 char getYellowStatus(){
-    return 'a';
-}
-
-char getRedStatus(){
-    return 'r';
-}
-
-char getGreenStatus(){
-    return 'g';
+    return '0';
 }
 
