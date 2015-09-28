@@ -131,7 +131,7 @@ var userService = {
     
     updateUserIsAberto: function (numeroSerie, isAberto, next) {
         User.update({ "veiculos.dispositivo.numeroSerie": numeroSerie }, 
-            { $set: { "veiculos.$.dispositivo.isAberto": isDisparado } }, function (err) {
+            { $set: { "veiculos.$.dispositivo.isAberto": isAberto } }, function (err) {
             if (err) {
                 return next(err);
             }
@@ -160,23 +160,16 @@ var userService = {
             data: dateTime.data
         }
         
-        var isAberto;
-        if (status == "DESATIVADO") {
-            isAberto = null;
-        }
-        
-        this.updateUserIsAberto(dispositivo.numeroSerie, isAberto, function (err) {
-            User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
-                $push: {
-                    'veiculos.$.dispositivo.ativacoes': { $each: [ativacao], $position: 0 }
-                }
-            }, function (err, user) {
-                if (err) {
-                    console.log(err);
-                }
-                next(err, user);
-            });
-        })
+        User.update({ 'veiculos.dispositivo.numeroSerie': dispositivo.numeroSerie }, {
+            $push: {
+                'veiculos.$.dispositivo.ativacoes': { $each: [ativacao], $position: 0 }
+            }
+        }, function (err, user) {
+            if (err) {
+                console.log(err);
+            }
+            next(err, user);
+        });
     },
     
     deleteUser : function (email, next) {
