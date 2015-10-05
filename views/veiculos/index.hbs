@@ -1,4 +1,4 @@
-<div class="jumbotron" id="divVeiculos" onshow="acao()">
+<div class="jumbotron" onshow="acao()">
     <div class="container-fluid">
         {{#each veiculos}}
         <fieldset>
@@ -6,67 +6,49 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
-
                             <form name="aciona" id="aciona" method="get" action="/veiculos/aciona/d-{{dispositivo.numeroSerie}}_{{dispositivo.ativacoes.[0].status}}">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">
                                     ACIONAR ALARME!
                                 </button>
                             </form>
-                            <div>
-                                <p id="notificacoes">
-                                    {{#if dispositivo.isAberto}}
-                                    <h1 id="alerta" style="color:red;">
-                                        ALARME DISPARANDO!!!
-                                    </h1>
-                                    {{else}}
-                                    <h4 id="alerta" style="color:green;">
-                                        Nenhuma Notificação
-                                    </h4>
-                                    {{/if}}
-                                </p>
-                            </div>
+                            <hr />
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h2 class="text-primary text-center">
-                                                    <strong>{{marca}}</strong>
-                                                </h2>
-                                                {{#if dispositivo.isConectado}}
-                                                <h4 style="color:blue;">
-                                                    CONECTADO
-                                                </h4>
-                                                {{else}}
-                                                <h4 style="color:red;">
-                                                    DESCONECTADO
-                                                </h4>
-                                                {{/if}}
+                                                <div id="marca-carro" class="car-info text-primary text-center">
+                                                    {{marca}} : {{cor}}
+                                                </div>
                                                 <picture>
-                                                    <img id="veiculo" alt="Carro" srcset="../images/carro.jpg 3x" class="img-thumbnail" />
+                                                    <img id="veiculo" alt="Carro" srcset="../images/carro.jpg 3x" width="300" height="300" class="img-thumbnail" />
                                                 </picture>
+                                                {{#if dispositivo.isConectado}}
+                                                <picture id="conectado" class="car-info text-primary text-center">
+                                                    <img src="../images/connected.png" width="60" height="60" alt="Conectado"/>
+                                                </picture>
+                                                {{else}}
+                                                <picture id="desconectado" class="car-info text-primary text-center">
+                                                    <img src="../images/disconnected.png" width="60" height="60" alt="Desconectado"/>
+                                                </picture>
+                                                {{/if}}
+                                                {{#if dispositivo.isAberto}}
+                                                <picture id="com-notificacao" class="car-info text-primary text-center">
+                                                    <img src="../images/alert.gif" width="60" height="60" alt="ALARME DISPARANDO!!"/>
+                                                </picture>
+                                                {{else}}
+                                                <picture id="sem-notificacao" class="car-info text-primary text-center">
+                                                    <img src="../images/protected.png" width="60" height="60" alt="Alarme Seguro"/>
+                                                </picture>
+                                                {{/if}}
                                             </div>
                                             <div class="col-md-6">
-                                                <dl>
-                                                    <dt>
-                                                        Placa
-                                                    </dt>
-                                                    <dd>
-                                                        {{placa}}
-                                                    </dd>
-                                                    <dt>
-                                                        Cor
-                                                    </dt>
-                                                    <dd>
-                                                        {{cor}}
-                                                    </dd>
-                                                    <dt>
-                                                        Última Alteração
-                                                    </dt>
-                                                    <dd>
-                                                        {{dispositivo.ativacoes.[0].data}} às {{dispositivo.ativacoes.[0].horario}}
-                                                    </dd>
-                                                </dl>
+                                                <div class="placa col-md-6">
+                                                    {{placa}}
+                                                </div>
+                                                <div id="car-info-status">
+                                                    <span id="alarme-status">{{dispositivo.ativacoes.[0].status}}</span> em {{dispositivo.ativacoes.[0].data}} às {{dispositivo.ativacoes.[0].horario}}
+                                                </div>
                                                 <form name="excluirVeiculo" id="excluirVeiculo" method="get" action="/veiculos/excluir/{{placa}}">
                                                     <button type="submit" class="btn btn-danger btn-lg btn-block">
                                                         Remover Veículo
@@ -79,15 +61,13 @@
                             </div>
                         </div>
                     </div>
-                    <h1 style="color:red;" class="text-center">
-                        Alarme {{dispositivo.ativacoes.[0].status}}
-                    </h1>
+                    <hr />
                 </div>
             </div>
         </fieldset>
         {{/each}}
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-offset-6">
                 <form name="novoVeiculo" id="novoVeiculo" method="get" action="/veiculos/create">
                     <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnAdicionarVeiculo">
                         Adicionar Novo Veículo

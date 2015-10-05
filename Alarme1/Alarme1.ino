@@ -25,15 +25,23 @@ InetGSM inet;
 //SIM900 IMEI
 char SERIAL_KEY_NUMBER[16] = "013950007601108";
 
+const int ledYellow = 13;
+const int button = 4;
+
+char yellowStatus = '0';
+
 void setup()
 {
   //Serial connection.
   Serial.begin(9600);
   Serial.println("GSM Shield testing.");
+      testaLed();
+
+  pinMode(ledYellow, OUTPUT);
+  pinMode(button, INPUT);
 
   if (gsm.begin(9600)) {
     Serial.println("\nstatus=READY");
-    //started = true;
     if (inet.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD)) {
       Serial.println("status=ATTACHED");
       if (inet.connectTCP(HOST, PORT)) {
@@ -48,20 +56,16 @@ void setup()
 void loop()
 {
   if (started) {
-    SERIAL_KEY_NUMBER[15] = getYellowStatus();
+    disparaAlarme();
+    SERIAL_KEY_NUMBER[15] = yellowStatus;
     submit(SERIAL_KEY_NUMBER);
-    endConnection();
   }
 };
 
-void endConnection() {
-  sendATCommand("AT+CIPCLOSE", 500);
-}
-
 void submit(char* message)
 {
+  Serial.println((String)message);
   sendMessage("AT+CIPSEND=16", message, 1000);
-  sendATCommand("AT+CIPSHUT", 100);
 }
 
 void sendATCommand(char* command, int d) {
@@ -84,20 +88,40 @@ void sendMessage(char* command, char* message, int d) {
   acendeLed(state);
 }
 
+void disparaAlarme()
+{
+  int stateButton = digitalRead(button);
+  if (stateButton == HIGH) {
+    yellowStatus = '1';
+  } else {
+    yellowStatus = '0';
+  }
+}
+
 void acendeLed(char state) {
   switch (state) {
     case '1': {
-        Serial.println("ACENDE LED VERMELHO");
+        Serial.println("Ativa");
+        digitalWrite(ledYellow, HIGH);
         break;
       }
     case '2': {
-        Serial.println("ACENDE LED VERDE");
+        Serial.println("Desativa");
+        digitalWrite(ledYellow, LOW);
         break;
       }
   }
 }
 
-char getYellowStatus(){
-    return '0';
+void testaLed() {
+  int i = 0;
+
+  for (i = 0; i < 30; i++) {
+    digitalWrite(ledYellow, HIGH);
+    delay(100);
+    digitalWrite(ledYellow, LOW);
+    delay(100);
+  }
 }
+
 

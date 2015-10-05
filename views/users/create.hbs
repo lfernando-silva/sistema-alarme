@@ -1,45 +1,24 @@
-﻿<fieldset>
-    <div class="jumbotron">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <form role="form" method="post">
-                        <div class="form-group">
-                            <label for="email">
-                                Email
-                            </label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail (até 40 caracteres)" maxlength="40" required value="{{input.email}}" />
-                        </div>
-                        <div class="form-group">
-                            <label for="nome">
-                                Nome
-                            </label>
-                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome (até 40 caracteres)" maxlength="40" required value="{{input.nome}}" />
-                        </div>
-                        <div class="form-group">
-                            <label for="cpf">
-                                CPF
-                            </label>
-                            <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF (apenas números)" maxlength="11" required value="{{input.cpf}}" />
-                        </div>
-                        <div class="form-group">
-
-                            <label for="password">
-                                Password
-                            </label>
-                            <input type="password" class="form-control" id="password" name="password" maxlength="8" placeholder="Password (até 8 caracteres)" autocomplete="off" required />
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            Criar!
-                        </button>
-                        <br /><br /><a href="/">Voltar</a>
-                        <span style="color:red;">{{error}}</span>
-                    </form>
-                </div>
+﻿<div class="login">
+    <h2>Novo Usuário</h2>
+    <form method="post">
+        <input type="text" id="email" name="email" maxlength="40" required class="user active" placeholder="E-mail (até 40 caracteres)" value="{{input.email}}" />
+        <input type="text" id="nome" name="nome" maxlength="40" required class="user active" placeholder="Nome (até 40 caracteres)" value="{{input.nome}}" />
+        <input type="text" id="cpf" name="cpf" maxlength="11" required class="user active"  placeholder="CPF (apenas números)" value="{{input.cpf}}" />
+        <input type="password" id="password" name="password" maxlength="8" class="lock active" placeholder="Senha (8 caracteres)" autocomplete="off" required />
+        <div class="forgot">
+            <div class="login-para">
+                <p><a href="/"> Voltar </a></p>
             </div>
+            <div class="clear"> </div>
         </div>
-    </div>
-</fieldset>
+        <div class="login-bwn">
+            <input type="submit" value="Entrar" />
+            {{#if error}}
+            <div style="color:red;">{{error}}</div>
+            {{/if}}
+        </div>
+    </form>
+</div>
 <script>
     jQuery(function ($) {
         $("#cpf").mask("999.999.999-99");
