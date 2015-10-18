@@ -16,8 +16,7 @@
     background-color: #bfbfbf;
     border: 5px solid black;
     border-radius: 8px 8px;
-    width: 400px;
-    min-width: 400px;
+    width: 100%;
     margin-bottom: 5%;
 }
 
