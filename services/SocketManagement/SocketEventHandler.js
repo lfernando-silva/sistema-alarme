@@ -3,8 +3,6 @@ var mongoose = require('mongoose');
 var MessageHandler = require('../MessageHandler.js');
 var UserService = require('../user-service.js');
 
-var serial;
-
 var SocketEventHandler = {
     
     handleMongooseConnection: function () {
@@ -22,7 +20,7 @@ var SocketEventHandler = {
     handleData: function (options) {
 
         var checkout = MessageHandler.getIsDisparadoStatus(options.data.toString());
-        serial = checkout.serial;
+        var serial = checkout.serial;
         var ledStatus = checkout.ledStatus;
         
         UserService.findUserDispositivo(serial, function (err, result) {
@@ -42,7 +40,7 @@ var SocketEventHandler = {
                             options.socket.write(writeMsg);
                         })
                     } else {
-                        UserService.updateUserIsAberto(serial, null, function () {
+                        UserService.updateUserIsAberto(serial, "0", function () {
                             options.socket.write(writeMsg);
                         })
                     }
@@ -52,6 +50,10 @@ var SocketEventHandler = {
     },
     
     handleSocketDestroy: function (options) {
+        
+        var checkout = MessageHandler.getIsDisparadoStatus(options.data.toString());
+        var serial = checkout.serial;
+
         UserService.updateUserIsConectado(serial, null, function (err) {
             console.log("Connection " + options.type + " from " + options.socket.remoteAddress + ":" + options.socket.remotePort)
             options.socket.destroy();

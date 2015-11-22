@@ -3,13 +3,7 @@
     getIsDisparadoStatus: function (arduinoCheckout) {
         var ledStatus = arduinoCheckout.slice(15);
         var serial = arduinoCheckout.slice(0, 15);
-        
-        if (ledStatus == "0") {
-            ledStatus = null;
-        } else {
-            ledStatus = "1";
-        }
-        
+              
         var checkout = {
             ledStatus: ledStatus,
             serial: serial
@@ -19,7 +13,7 @@
     },
     
     getWriteMessage: function (status) {
-        if (status == "ATIVADO") {
+        if (status == "1") {
             return '1';
         } else {
             return '2';

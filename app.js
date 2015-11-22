@@ -8,6 +8,7 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
 var connectMongo = require('connect-mongo');
+var favicon = require('serve-favicon');
 
 var config = require('./config/config.js');
 var routes = require('./routes/index');

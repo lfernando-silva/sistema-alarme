@@ -10,48 +10,44 @@ var Server = Net.createServer(function (socket) {
     
     SocketEventHandler.handleNewConnection(socket);
     SocketEventHandler.handleSetKeepAlive(socket, 20);
-     
+    
+    var options = {
+        socket: socket
+    }
+    
     socket.on('data', function (data) {
-
-        var options = {
-            data: data,
-            socket: socket
-        }
+        options.data = data;
         SocketEventHandler.handleData(options);
     });
     
     socket.setTimeout(240 * 1000, function (socket) {
         
-        var options = {
-            socket: socket,
-            type: "timed out"
-        }
+        options.data = data;
+        options.type = "timed out";
+        
         SocketEventHandler.handleSocketDestroy(options);
     });
     
     //fecha a conexão de fato
     socket.on('close', function () {
-        var options = {
-            socket: socket,
-            type: "closed"
-        }
+        
+        options.type = "closed";
+        
         SocketEventHandler.handleSocketDestroy(options);
     });
     
     //fecha a conexão de fato
     socket.on('end', function () {
-        var options = {
-            socket: socket,
-            type: "ended"
-        }
+        
+        options.type = "ended"
+        
         SocketEventHandler.handleSocketDestroy(options);
     });
     
     socket.on('error', function () {
-        var options = {
-            socket: socket,
-            type: "failed"
-        }
+        
+        options.type = "failed"
+        
         SocketEventHandler.handleSocketDestroy(options);
     });
 });

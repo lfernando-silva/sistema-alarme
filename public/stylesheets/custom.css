@@ -12,6 +12,7 @@
         position: inherit;
         margin: 0 0 0 250px;
         /*--padding: 0 30px;--*/
+        border-left: 1px solid #e7e7e7;
     }
 }
 
@@ -74,7 +75,6 @@
 .sidebar .sidebar-nav.navbar-collapse {
     padding-right: 0;
     padding-left: 0;
-    background-color: #00BFFF;
 }
 
 .sidebar .sidebar-search {
@@ -85,22 +85,20 @@
 }
 
 .sidebar .fa.arrow:before {
-    content: "+";
+    content: "\f104";
 }
 
 .sidebar .active>a>.fa.arrow:before {
-    content: "-";
+    content: "\f107";
 }
 
 .sidebar .nav-second-level li,
 .sidebar .nav-third-level li {
     border-bottom: 0!important;
-    background-color: #1E90FF;
 }
 
 .sidebar .nav-second-level li a {
     padding-left: 37px;
-    background-color:#87CEFF;
 }
 
 .sidebar .nav-third-level li a {

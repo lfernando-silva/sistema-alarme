@@ -10,19 +10,21 @@ router.get('/', function (req, res) {
 });
 
 router.get('/help', function (req, res) {
-    var nome = req.user.nome;
+    var user = req.user;
     var vm = {
         title: 'Ajuda',
-        nome: nome
+        user: user,
+        veiculos: user.veiculos
     };
     res.render('users/help', vm);
 });
 
 router.get('/about', function (req, res) {
-    var nome = req.user.nome;
+    var user = req.user;
     var vm = {
         title: 'Sobre',
-        nome: nome
+        user: user,
+        veiculos: user.veiculos
     };
     res.render('users/about', vm);
 });
@@ -79,24 +81,22 @@ router.get('/logout', function (req, res, next) {
 
 router.get('/update', function (req, res) {
     //nessa variável, podemos setar qualquer tag na página destino
-    var email = req.user.email;
-    var nome = req.user.nome;
-    var cpf = req.user.cpf;
-    userService.findUser(email, function (err) {
+    var user = req.user;
+    
+    userService.findUser(user.email, function (err) {
         if (!err) {
             var vm = {
                 title: 'Atualizar Dados',
-                email: email,
-                cpf: cpf,
-                nome: nome
+                user: user,
+                veiculos: user.veiculos
             };
             res.render('users/update', vm);
         }
-    })   
+    })
 });
 
 router.post('/update', function (req, res) {
-    userService.updateUser(req.body, function (err){
+    userService.updateUser(req.body, function (err) {
         if (!err) {
             res.redirect('/veiculos');
         }
@@ -104,13 +104,13 @@ router.post('/update', function (req, res) {
 });
 
 router.get('/delete', function (req, res) {
-    var email = req.user.email;
-    var nome = req.user.nome;
-    userService.findUser(email, function (err) {
+    var user = req.user;
+    userService.findUser(user.email, function (err) {
         if (!err) {
             var vm = {
                 title: 'Excluir Conta',
-                nome: nome
+                user: user,
+                veiculos: user.veiculos
             };
             res.render('users/delete', vm);
         }

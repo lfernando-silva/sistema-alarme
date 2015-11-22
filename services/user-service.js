@@ -72,6 +72,15 @@ var userService = {
         });
     },
     
+    userFindVeiculo: function (email, placa, next) {
+        User.find({ email: email, "veiculos.placa": placa }, { "veiculos.$": 1 }, function (err, result) {
+            if (err || !result || result.length == 0) {
+                return next('Not Found');
+            };
+            next(result[0].veiculos[0]);
+        })
+    },
+    
     updateUserAddVeiculo : function (email, veiculo, next) {
         
         var dateTime = userService.getDateTime();
@@ -93,11 +102,11 @@ var userService = {
             User.update({ email: email }, {
                 $addToSet: {
                     veiculos: {
-                        placa: veiculo.placa.toUpperCase(),
+                        placa: veiculo.placa,
                         marca: veiculo.marca,
                         cor: veiculo.cor,
                         dispositivo: {
-                            numeroSerie: veiculo.numeroSerie.toUpperCase(),
+                            numeroSerie: veiculo.numeroSerie,
                             isConectado: null,
                             isAberto: null, 
                             //aberto = null significa que o carro está aberto, = 1 está fechado. 
@@ -198,10 +207,10 @@ var userService = {
     },
     
     checkNextState: function (status) {
-        if (status == 'DESATIVADO') {
-            return 'ATIVADO';
+        if (status == '1') {
+            return null;
         } else {
-            return 'DESATIVADO';
+            return '1';
         }
     }
 }

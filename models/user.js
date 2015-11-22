@@ -7,7 +7,6 @@ var userSchema = new Schema({
     cpf: {type:String, required: "Insira seu CPF" },
     email: {type:String, required: "Insira seu email" },
     password: { type: String, required: "Insira a senha" },
-    imagemProfile: { type: String, required: "Insira a imagem" },
     veiculos: {type: Array, default: []},
     created: {type: Date, default: Date.now}
 });
