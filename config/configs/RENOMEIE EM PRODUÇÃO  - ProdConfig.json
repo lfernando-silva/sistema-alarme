@@ -1,0 +1,5 @@
+{
+  "meta": "Production",
+  "client": "mongodb",
+  "mongoUri": "mongodb://jabour:123mudar@localhost:27017/basejabour"
+}
