@@ -49,7 +49,7 @@ router.get('/:id', function (req, res) {
     
     var placa = req.params.id;
     
-    userService.userFindVeiculo(req.user.email, placa, function (err,result) {
+    userService.userFindVeiculo(req.user.email, placa, function (result) {
         if (result) {
             var veiculo = {
                 placa: result.placa,
@@ -64,7 +64,7 @@ router.get('/:id', function (req, res) {
                 veiculos: req.user.veiculos,
                 defaultVeiculo: veiculo
             }
-            res.render('veiculos/index', vm);
+            return res.render('veiculos/index', vm);
         }
         res.redirect('/veiculos');
     })

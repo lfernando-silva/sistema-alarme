@@ -26,6 +26,19 @@ body {
     width: 100%;
 }
 
+.dropdown-div{
+    font-family: Mandator;
+    font-size: 16px;
+    text-align: center;
+    color: black;
+    background-color: #bfbfbf;
+    border: 3px solid black;
+    border-radius: 3px 3px;
+    width: 55%;
+    margin: 5% 25% 5% 25%;
+}
+
+
 .nav-second-level {
     margin-bottom: 8%;
     background-color: #e0e0e0;
@@ -136,4 +149,8 @@ body {
 #cadastro{
     text-align: center;
     background-color: #eeeeee;
+}
+
+.dropdown-li{
+    text-align: center;
 }

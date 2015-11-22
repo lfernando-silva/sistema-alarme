@@ -40,7 +40,7 @@ var SocketEventHandler = {
                             options.socket.write(writeMsg);
                         })
                     } else {
-                        UserService.updateUserIsAberto(serial, "0", function () {
+                        UserService.updateUserIsAberto(serial, null, function () {
                             options.socket.write(writeMsg);
                         })
                     }
