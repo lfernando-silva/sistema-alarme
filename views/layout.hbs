@@ -42,7 +42,7 @@
 
     <title>{{#if title}}{{title}}{{/if}} | Sistema Alarme</title>
 </head>
-<body>
+<body id="body-content" onload="ajax_refresh()">
     {{#if user}}
     <!--BEGIN NAV BAR-->
     <div class="container-fluid">

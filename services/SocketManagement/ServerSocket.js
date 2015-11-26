@@ -22,7 +22,6 @@ var Server = Net.createServer(function (socket) {
     
     socket.setTimeout(240 * 1000, function (socket) {
         
-        options.data = data;
         options.type = "timed out";
         
         SocketEventHandler.handleSocketDestroy(options);

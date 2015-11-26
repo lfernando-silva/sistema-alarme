@@ -13,7 +13,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <!--Connection panel-->
-                    <div class="col-md-3">
+                    <div id="conectado" class="col-md-3">
                         {{#if defaultVeiculo.dispositivo.isConectado}}
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -36,7 +36,7 @@
                     </div>
                     <!--End Connection panel-->
                     <!--Alarm alert panel-->
-                    <div class="col-md-3">
+                    <div id="alarme-disparando" class="col-md-3">
                         {{#if defaultVeiculo.dispositivo.isAberto}}
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -111,11 +111,11 @@
     </div>
     {{else}}
     <div class="well well-lg">
-            <div class="panel-body ultima-ativacao-text history">
-                <picture id="sem-notificacao" class="car-info text-primary text-center">
-                    <img src="../images/none.png" alt="Nenhum Veículo Cadastrado" />
-                </picture>
-            </div>
+        <div class="panel-body ultima-ativacao-text history">
+            <picture id="sem-notificacao" class="car-info text-primary text-center">
+                <img src="../images/none.png" alt="Nenhum Veículo Cadastrado" />
+            </picture>
+        </div>
         <span id="nenhum-veiculo" class="history">Que tal cadastrar um veículo?</span>
         <form name="novoVeiculo" method="get" action="/veiculos/create">
             <button type="submit" class="btn btn-primary btn-md" id="btnAdicionarVeiculo">
