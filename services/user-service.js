@@ -1,6 +1,5 @@
 ﻿var bcrypt = require('bcryptjs');
 var User = require('../models/user');
-var Observer = require("node-observer");
 
 var userService = {
     addUser: function (user, next) {
@@ -213,13 +212,6 @@ var userService = {
         } else {
             return '1';
         }
-    },
-
-    send: function (serial, status, options, writeMsg){
-        Observer.send(this, "disparar", "ALARME DISPARADO!");
-        userService.updateUserIsAberto(serial, status, function (){
-            options.socket.write(writeMsg);
-        })
     }
 }
 

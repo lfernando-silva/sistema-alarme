@@ -36,10 +36,9 @@ var SocketEventHandler = {
                     
                     //sistema só mostra "alarme disparado" se o status é ativado e o led amarelo estiver aceso.
                     if ((writeMsg == '1') && (ledStatus == "1")) {
-                        UserService.send(serial, "1", options, writeMsg);
-                        //UserService.updateUserIsAberto(serial, "1", function () {
-                        //    options.socket.write(writeMsg);
-                        //})
+                        UserService.updateUserIsAberto(serial, "1", function () {
+                            options.socket.write(writeMsg);
+                        })
                     } else {
                         UserService.updateUserIsAberto(serial, null, function () {
                             options.socket.write(writeMsg);
