@@ -37,6 +37,7 @@ void setup()
   Serial.println("GSM Shield testing.");
 
   pinMode(button, INPUT);
+  pinMode(led, OUTPUT);
 
   if (gsm.begin(9600)) {
     Serial.println("\nstatus=READY");

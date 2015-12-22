@@ -19,14 +19,7 @@ var Server = Net.createServer(function (socket) {
         options.data = data;
         SocketEventHandler.handleData(options);
     });
-    
-    socket.setTimeout(240 * 1000, function (socket) {
-        
-        options.type = "timed out";
-        
-        SocketEventHandler.handleSocketDestroy(options);
-    });
-    
+       
     //fecha a conexão de fato
     socket.on('close', function () {
         
